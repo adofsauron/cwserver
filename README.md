@@ -4,7 +4,6 @@
 * 运行环境： node.js v4.4.5
 
 ## 系统需要安装的软件:
-> protobufjs
 > node.js
 
 ## 附加文档：
