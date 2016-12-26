@@ -22,10 +22,6 @@
 > proto：Protobuf协议通信相关
 
 ### webserver配置文件： ./base/config.js
-## 部署之后需要跟随环境修改的内容： 
-> 1). control虚拟机的ip地址， 端口
-> 2). 数据库的ip地址, 端口
-
 
 ## 运行方式：
 > 1). 在WebServer目录下执行 $ nohub node Main.js & 
