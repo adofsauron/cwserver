@@ -72,7 +72,7 @@ function ServerRun() {
         echo "node is not installed"
     else
         echo 'web server ready runing'
-        $NODE_BIN $MAIN_FILE
+        nohup $NODE_BIN $MAIN_FILE &
     fi
 }
 
