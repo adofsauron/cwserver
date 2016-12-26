@@ -5,12 +5,16 @@ var compression         = require('compression');
 var cookieSession       = require('cookie-session');
 var bodyParser          = require('body-parser');
 var cookieParser        = require('cookie-parser');
+var uuid                = require('node-uuid');
+var path                = require('path');
+var csrf                = require('csurf')
+var session             = require('express-session')
 
 var CONFIG              = require('../base/config.js');
 var logger              = require('../common/logger').logger;
 var logger_error        = require('../common/logger').logger_error;
 var routers             = require('./http_web_router');
-var db_process          = require('../db/db_process.js');
+var db_pool             = require('../db/db_pool.js');
 
 function HTTP_Server()
 {
@@ -23,15 +27,31 @@ function HTTP_Server()
         m_app.use(bodyParser.urlencoded({ extended: false }));
         m_app.use(cookieParser());
 
+        // view engine setup
+        m_app.set('views', path.join(__dirname, '../views'));
+        m_app.set('view engine', 'ejs');
+
         m_app.use(function(req, res, next) {
             res.header("Access-Control-Allow-Origin", "*");
             res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
             next();
         })
+
+        // session 
+        var session_config = {
+            secret: CONFIG.session_secret,
+            resave: false,
+            saveUninitialized: true,
+            // cookie: { secure: true }, // only https
+        }
+        m_app.use(session(session_config));
+
+        // token
+        m_app.use(csrf({ cookie: true }));
     }
 
     function StaticInit() {
-        db_process.createConnection();
+        //db_pool.createPoll();
     }
 
     this.m_Init = function() {

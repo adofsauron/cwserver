@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+  <body>
+
+    <p>csrfToken:&nbsp;&nbsp;<%= csrfToken %></p>
+        
+    <hr/>
+
+    <p>register</p>
+    <form action=<%= WrapRoute('/do/register') %> method="post">
+        <input type="hidden" name="_csrf" value=<%= csrfToken %> >
+        <p>name: <input type="text" name="name" /></p>
+        <p>passwd: <input type="password" name="passwd" /></p>
+        <p>reasswd: <input type="password" name="repasswd" /></p>
+        <input type="submit" value="Submit" />
+    </form>
+
+    <hr/>
+
+    <p><a href="<%= WrapRoute('/do/login') %>">login</a></p>
+
+  </body>
+</html>

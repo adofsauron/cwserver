@@ -35,22 +35,18 @@ function helper() {
     echo "args meaning: "
     echo "    -p            [WebServer port]"
     echo "    -d            [log level， DEBUG/INFO/WARN/ERROR]"
-    echo "    -c            [control server ip]"
-    echo "    -s            [control seerver port]"
     echo "    -e            [db ip]"
     echo "    -t            [db port]"
     echo "    -u            [db user]"
     echo "    -w            [db passwd]"
     echo "    -?            [help message]"
     echo "[for example: you should put all the cmd as follow:]"
-    echo "[./start.sh -p 1524 -d DEBUG -c 10.0.100.68 -s 5077 -e 10.0.100.68 -t 3306 -u root -w '' ]"
+    echo "[./start.sh -p 1524 -d DEBUG -e 127.0.0.1 -t 3306 -u root -w '' ]"
 }
 
 function SetEnv() {
     export PORT=$PORT
     export LOG_LEVEL=$LOG_LEVEL
-    export CT_IP='tcp://'$CT_IP
-    export CT_PORT=$CT_PORT
     export DB_IP=$DB_IP
     export DB_PORT=$DB_PORT
     export DB_USER=$DB_USER
@@ -62,8 +58,6 @@ function SetEnv() {
 function ShowEnv() {
     echo 'PORT        :'    $PORT
     echo 'LOG_LEVEL   :'    $LOG_LEVEL
-    echo 'CT_IP       :'    'tcp://'$CT_IP
-    echo 'CT_PORT     :'    $CT_PORT
     echo 'DB_IP       :'    $DB_IP
     echo 'DB_PORT     :'    $DB_PORT
     echo 'DB_USER     :'    $DB_USER
@@ -83,7 +77,7 @@ function ServerRun() {
 }
 
 ### inpout args
-while getopts p:d:c:s:e:t:u:w:?:i val
+while getopts p:d:e:t:u:w:?:i val
 do
     case $val in 
          'p')
@@ -94,16 +88,6 @@ do
          'd')
             echo "LOG_LEVEL: " ${OPTARG}
             LOG_LEVEL=${OPTARG}
-         ;;
-
-         'c')
-            echo "CT_IP: " ${OPTARG}
-            CT_IP=${OPTARG}
-         ;;
-
-         's')
-            echo "CT_PORT: " ${OPTARG}
-            CT_PORT=${OPTARG}
          ;;
 
          'e')
@@ -136,8 +120,6 @@ done
 if ! [[ \
             $PORT \
         && $LOG_LEVEL \
-        && $CT_IP \
-        && $CT_PORT \
         && $DB_IP \
         && $DB_PORT \
         && $DB_USER \

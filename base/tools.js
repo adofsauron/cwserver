@@ -66,3 +66,24 @@ exports.CondenFolderWithZIP = function (pathPrefix, folderName, destFile) {
     logger.info('tool CondenFolderWithZIP:' + destFile);
 }
 
+// 过滤路径中重复的'/'
+exports.FiltratePath = function(path) {
+    return path.replace(/[\/]{2,}/g, '/');
+}
+
+// 根据前端需求，合成路径
+exports.WrapRoute = function (proxy_route, path) {
+    var allPath = proxy_route + '/' + path;
+    
+    var truePath = exports.FiltratePath(allPath);
+
+    logger.debug('truePath: ' + truePath);
+    return truePath;
+}
+
+// 验证是否符合邮箱格式 
+// return true:yes, false:no
+exports.IsEmail = function (str) {
+    var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/; 
+    return reg.test(str);
+}
