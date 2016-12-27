@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS `user`
 CREATE TABLE IF NOT EXISTS `food`
 (
     id              INT(20)     NOT NULL   AUTO_INCREMENT,
+    uuid            char(128)   NOT NULL,
     name            char(20)    NOT NULL,  -- 食物名字
     picture         char(80)    NOT NULL,  -- 食物图片位置(文件夹)/main.*
     material        char(80)    NOT NULL,  -- 食材
@@ -34,6 +35,7 @@ CREATE TABLE IF NOT EXISTS `food`
 CREATE TABLE IF NOT EXISTS `shop`
 (
     id            INT(20)       NOT NULL   AUTO_INCREMENT,
+    uuid          char(128)     NOT NULL,
     name          char(20)      NOT NULL,   -- 店铺名字
     picture       char(40)      NOT NULL,   -- 店铺图片(文件夹)
     site          char(20)      NOT NULL,   -- 地域
