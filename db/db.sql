@@ -6,9 +6,9 @@ use cate;
 CREATE TABLE IF NOT EXISTS `user`
 (
     id            INT(20)    NOT NULL   AUTO_INCREMENT,
-    uuid          char(128)  NOT NULL,  -- uuid,作为对应文件夹的名字
-    name          char(20)   NOT NULL,   -- 用户名, 邮箱
-    passwd        char(20)   NOT NULL,   -- 密码
+    uuid          CHAR(128)  NOT NULL,  -- uuid,作为对应文件夹的名字
+    name          CHAR(20)   NOT NULL,   -- 用户名, 邮箱
+    passwd        CHAR(20)   NOT NULL,   -- 密码
 
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
@@ -18,15 +18,15 @@ CREATE TABLE IF NOT EXISTS `user`
 CREATE TABLE IF NOT EXISTS `food`
 (
     id              INT(20)     NOT NULL   AUTO_INCREMENT,
-    uuid            char(128)   NOT NULL,
-    name            char(20)    NOT NULL,  -- 食物名字
-    picture         char(80)    NOT NULL,  -- 食物图片位置(文件夹)/main.*
-    material        char(80)    NOT NULL,  -- 食材
-    history         char(500)   NOT NULL,  -- 历史
-    site            char(80)    NOT NULL,  -- 地域
+    uuid            CHAR(128)   NOT NULL,
+    name            CHAR(20)    NOT NULL,  -- 食物名字
+    picture         CHAR(80)    NOT NULL,  -- 食物图片位置(文件夹)/main.*
+    material        CHAR(80)    NOT NULL,  -- 食材
+    history         CHAR(500)   NOT NULL,  -- 历史
+    site            CHAR(80)    NOT NULL,  -- 地域
 
     make_type       INT(1)      NOT NULL;  -- 制作工艺 类型 1:视频，2:图片
-    make_step       char(500)   NOT NULL;  -- 制作步骤，json的string形式，视频则只有地址，图片介绍分步骤
+    make_step       CHAR(500)   NOT NULL;  -- 制作步骤，json的string形式，视频则只有地址，图片介绍分步骤
 
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
@@ -35,11 +35,11 @@ CREATE TABLE IF NOT EXISTS `food`
 CREATE TABLE IF NOT EXISTS `shop`
 (
     id            INT(20)       NOT NULL   AUTO_INCREMENT,
-    uuid          char(128)     NOT NULL,
-    name          char(20)      NOT NULL,   -- 店铺名字
-    picture       char(40)      NOT NULL,   -- 店铺图片(文件夹)
-    site          char(20)      NOT NULL,   -- 地域
-    class         char(20)      NOT NULL,   -- 类别
+    uuid          CHAR(128)     NOT NULL,
+    name          CHAR(20)      NOT NULL,   -- 店铺名字
+    picture       CHAR(40)      NOT NULL,   -- 店铺图片(文件夹)
+    site          CHAR(20)      NOT NULL,   -- 地域
+    classify      CHAR(20)      NOT NULL,   -- 类别
 
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `collect`
 CREATE TABLE IF NOT EXISTS `crs`
 (
     id            INT(20)   NOT NULL   AUTO_INCREMENT,
-    class         char(20)  NOT NULL,   -- 类别
+    classify      CHAR(20)  NOT NULL,   -- 类别
     shop_id       INT(20)   NOT NULL,   -- shop id
 
     primary key (id)
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `crs`
 CREATE TABLE IF NOT EXISTS `comment`
 (
     id            INT(20)       NOT NULL   AUTO_INCREMENT,
-    content       char(500)     NOT NULL,   -- 内容
+    content       CHAR(500)     NOT NULL,   -- 内容
     user_id       INT(20)       NOT NULL,   -- user id
     shop_id       INT(20)       NOT NULL,   -- shop id
 
