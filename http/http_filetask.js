@@ -26,7 +26,7 @@ function HTTP_FileTask()
     var m_2ct_jData = new PACKET_CT_CONFIG.SimulationRequestMsg;
     var m_emitter   = new events.EventEmitter();
 
-    InitEmitter();
+    //InitEmitter();
 
     // 事件注册
     function InitEmitter() {

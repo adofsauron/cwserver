@@ -15,6 +15,7 @@ var logger              = require('../common/logger').logger;
 var logger_error        = require('../common/logger').logger_error;
 var routers             = require('./http_web_router');
 var db_pool             = require('../db/db_pool.js');
+var http_food           = require('./http_food.js');
 
 function HTTP_Server()
 {
@@ -48,11 +49,11 @@ function HTTP_Server()
         m_app.use(session(session_config));
 
         // token
-         m_app.use(csrf({ cookie: true }));
+        // m_app.use(csrf({ cookie: true }));
     }
 
     function StaticInit() {
-        
+
     }
 
     this.m_Init = function() {

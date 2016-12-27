@@ -1,44 +1,49 @@
-<!DOCTYPE html>
-<html>
-    <head>
-    </head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "www.mobiletrain.org /TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="www.mobiletrain.org ">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>add-food</title>
+</head>
+
   <body>
 
         
     <hr/>
 
-    <p>uid:&nbsp;&nbsp;<%= uid %></p> <hr>
+    <p>uid:&nbsp;&nbsp;<%= uid %></p> 
+
+    <%
+      url = WrapRoute('/do/add-food') + '/' + uid;
+    %>
 
 
-    <form action="<%= WrapRoute('/do/add-food') %>" method="post">
-        <input type="hidden" name="uid" value=<%= uid %> >
-        <input type="hidden" name="_csrf" value=<%= csrfToken %>>
+    <form action="<%= url %>"  enctype="multipart/form-data" method="post">
+        <p>uid:<input  name="uid" value=<%= uid %> /></p>
 		
         <p>名字: <input type="text" name="name" /></p>
-		<p>图片: <input type="file" name="picture" /></p>
+		    <p>图片: <input type="file" name="pic_main" multiple="multiple" accept=""/></p>
         <p>食材: <input type="text" name="material" /></p>
         <p>历史: <textarea  cols="40" rows="5" name="history" ></textarea></p>
-		<p>地域: <input type="text" name="site" /></p><hr>
-		<p>工艺类型(视频/图片): <input type="text" name="make_type" /></p><hr>
-		
-		<p><input type="radio" name="make_type" value="mt_1"/>视频介绍</p>    
-		<p><input type="radio" name="make_type" value="mt_2"/>图片文字介绍</p><hr>    
-		
-		
-		
-		<p>视频上传: <input type="file" name="video" /></p><hr>
-		
-		<p>步骤一描述:<textarea  cols="40" rows="5" name="ms_1" ></textarea></p>	
-		<p>步骤一图片:<input type="file" name="ms_1_pic" /></p><hr>
-		
-		
-		<p>步骤二描述:<textarea  cols="40" rows="5" name="ms_2" ></textarea></p>
-		<p>步骤二图片:<input type="file" name="ms_2_pic" /></p><hr>
+        <p>地域: <input type="text" name="site" /></p><hr>
+        
+        <p><input type="radio" name="make_type" value="mt_1"/>视频介绍</p>    
+        <p><input type="radio" name="make_type" value="mt_2"/>图片文字介绍</p><hr>    
+        
+        
+        
+        <p>视频上传: <input type="file" name="up_vedio" multiple="multiple"/></p><hr>
+        
+        <p>步骤一描述:<textarea  cols="40" rows="5" name="ms_1" ></textarea></p>	
+        <p>步骤一图片:<input type="file" name="pic_1" multiple="multiple"/></p><hr>
+        
+        
+        <p>步骤二描述:<textarea  cols="40" rows="5" name="ms_2" ></textarea></p>
+        <p>步骤二图片:<input type="file" name="pic_2" multiple="multiple"/></p><hr>
 
-		<p>步骤三描述:<textarea  cols="40" rows="5" name="ms_3" ></textarea></p>
-		<p>步骤三图片:<input type="file" name="ms_3_pic" /></p><hr>
-		
-		<input type="submit" value="提交" style="width:400px;color:red;"/>
+        <p>步骤三描述:<textarea  cols="40" rows="5" name="ms_3" ></textarea></p>
+        <p>步骤三图片:<input type="file" name="pic_3" multiple="multiple"/></p><hr>
+        
+        <input type="submit" value="提交" style="width:400px;color:red;"/>
     </form>
 
     <hr/>

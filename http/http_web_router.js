@@ -30,6 +30,6 @@ router.get  ('/do/admin',                 http_auth.m_auth, http_model.m_Login);
 router.post ('/do/login',                 http_auth.m_Login);                          // post form login
 
 router.get  ('/do/add-food',               http_food.m_RenderAddFood);
-router.post ('/do/add-food',               http_food.m_ExecuteAddFood);
+router.post ('/do/add-food/:uid',          http_food.m_ExecuteAddFood);
 
 module.exports = router;
