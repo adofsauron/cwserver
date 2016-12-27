@@ -4,6 +4,7 @@ var http_fileTask     = require('./http_filetask.js');
 var http_provideFile  = require('./http_providefile.js');
 var http_auth         = require('./http_auth.js');
 var http_model        = require('./http_model.js');
+var http_food         = require('./http_food.js');
 
 
 var router            = require('express').Router();
@@ -19,10 +20,16 @@ router.get  ('/file-down/:task_id',        http_fileTask.m_DownFileByTaskID);
 router.post ('/file-starttask/:task_id',   http_fileTask.m_StartTask);
 
 // auth
-router.get  ('/do/login',                      http_auth.m_auth, http_model.m_Login);       // check auth, if no then login
-router.post ('/do/login',                      http_auth.m_Login);                          // post form login
-router.get  ('/do/register',                   http_model.m_Register)                       // get register html
-router.post ('/do/register',                   http_auth.m_Register);                       // post form register
+router.get  ('/do/login',                 http_auth.m_auth, http_model.m_Login);       // check auth, if no then login
+router.post ('/do/login',                 http_auth.m_Login);                          // post form login
+router.get  ('/do/register',              http_model.m_Register)                       // get register html
+router.post ('/do/register',              http_auth.m_Register);                       // post form register
 
+// admin
+router.get  ('/do/admin',                 http_auth.m_auth, http_model.m_Login);       // check auth, if no then login
+router.post ('/do/login',                 http_auth.m_Login);                          // post form login
+
+router.get  ('/do/add-food',               http_food.m_RenderAddFood);
+router.post ('/do/add-food',               http_food.m_ExecuteAddFood);
 
 module.exports = router;

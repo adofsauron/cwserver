@@ -1,4 +1,4 @@
-// db user process
+// db shop process
 
 var db_pool         = require('./db_pool.js');
 var CONFIG          = require('../base/config.js');

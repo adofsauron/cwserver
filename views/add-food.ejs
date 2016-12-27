@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+  <body>
+
+        
+    <hr/>
+
+    <p>uid:&nbsp;&nbsp;<%= uid %></p> <hr>
+
+
+    <form action="<%= WrapRoute('/do/add-food') %>" method="post">
+        <input type="hidden" name="uid" value=<%= uid %> >
+        <input type="hidden" name="_csrf" value=<%= csrfToken %>>
+		
+        <p>名字: <input type="text" name="name" /></p>
+		<p>图片: <input type="file" name="picture" /></p>
+        <p>食材: <input type="text" name="material" /></p>
+        <p>历史: <textarea  cols="40" rows="5" name="history" ></textarea></p>
+		<p>地域: <input type="text" name="site" /></p><hr>
+		<p>工艺类型(视频/图片): <input type="text" name="make_type" /></p><hr>
+		
+		<p><input type="radio" name="make_type" value="mt_1"/>视频介绍</p>    
+		<p><input type="radio" name="make_type" value="mt_2"/>图片文字介绍</p><hr>    
+		
+		
+		
+		<p>视频上传: <input type="file" name="video" /></p><hr>
+		
+		<p>步骤一描述:<textarea  cols="40" rows="5" name="ms_1" ></textarea></p>	
+		<p>步骤一图片:<input type="file" name="ms_1_pic" /></p><hr>
+		
+		
+		<p>步骤二描述:<textarea  cols="40" rows="5" name="ms_2" ></textarea></p>
+		<p>步骤二图片:<input type="file" name="ms_2_pic" /></p><hr>
+
+		<p>步骤三描述:<textarea  cols="40" rows="5" name="ms_3" ></textarea></p>
+		<p>步骤三图片:<input type="file" name="ms_3_pic" /></p><hr>
+		
+		<input type="submit" value="提交" style="width:400px;color:red;"/>
+    </form>
+
+    <hr/>
+
+    <p><a href="admin.html">管理主页</a></p>
+
+  </body>
+</html>

@@ -28,8 +28,6 @@ function HTTP_Server()
         m_app.use(cookieParser());
 
         // view engine setup
-        //m_app.set('views', path.join(__dirname, '../views'));
-        
 
         m_app.set('views', path.join(__dirname, CONFIG.VIEWS_PATH));
         m_app.set('view engine', 'ejs');
@@ -50,11 +48,11 @@ function HTTP_Server()
         m_app.use(session(session_config));
 
         // token
-        m_app.use(csrf({ cookie: true }));
+         m_app.use(csrf({ cookie: true }));
     }
 
     function StaticInit() {
-        //db_pool.createPoll();
+        
     }
 
     this.m_Init = function() {

@@ -1,4 +1,4 @@
-// db user process
+// db food process
 
 var db_pool         = require('./db_pool.js');
 var CONFIG          = require('../base/config.js');
@@ -25,42 +25,43 @@ function DB_Process ()
     }
 
     // add user
-    this.m_AddUser = function(user, callback) {
-        var sql = 'INSERT INTO user(uid, name, passwd) VALUES(?, ?, ?)';
-        var sql_params = [user.uid, user.name, user.passwd];
+    this.m_AddFood = function(food, callback) {
+        var sql = 'INSERT INTO food(uid, name, material, history, site, make_type, make_step) VALUES(?,?,?,?,?,?,?)';
+        var sql_params = [food.uid, food.name, food.material, food.history, food.site, food.make_type, food.make_step];
 
         PoolExecute(sql, sql_params, callback);
     }
 
     // delete user by user.name and passwd
-    this.m_DelUser = function(user, callback) {
-        var sql = 'DELETE FROM user WHERE name = ? AND passwd = ?';
-        var sql_params = [user.name, user.passwd];
+    this.m_DelUser = function(food, callback) {
+        var sql = 'DELETE FROM food WHERE id = ?';
+        var sql_params = [food.id];
 
         PoolExecute(sql, sql_params, callback);
     } 
 
-    // update user by user.name and passwd
-    this.m_UpdateUser = function(oldUser , newUser, callback) {
-        var sql = 'UPDATE user SET name = ?, passwd = ? WHERE name = ? AND passwd = ?';
-        var sql_params = [newUser.name, newUser.passwd, oldUser.name, oldUser.passwd];
+    // find one food by food.id and passwd
+    this.m_FindOneById = function(food, callback) {
+        var sql = 'SELECT * from food where id= ?';
+        var sql_params = [food.id];
          
         PoolExecute(sql, sql_params, callback);
     }
 
-    // find one user by user.name and passwd
-    this.m_FindOneUser = function(user, callback) {
-        var sql = 'SELECT * from user where name= ? AND passwd= ?';
-        var sql_params = [user.name, user.passwd];
-         
+    // find by site
+    this.m_FindBySite = function(site, callback) {
+        var sql = 'SELECT * from food where site = ?';
+        var sql_params = [site];
+
         PoolExecute(sql, sql_params, callback);
     }
 
-    // find all users
-    this.m_FindAllUser = function(callback) {
-        var sql = 'SELECT * from user';
+    // find by name
+    this.m_FindBySite = function(name, callback) {
+        var sql = 'SELECT * from food where name like \'%' + site + '&\'';
+        var sql_params = [name];
 
-        PoolExecute(sql, [], callback);
+        PoolExecute(sql, sql_params, callback);
     }  
 };
 
