@@ -28,7 +28,10 @@ function HTTP_Server()
         m_app.use(cookieParser());
 
         // view engine setup
-        m_app.set('views', path.join(__dirname, '../views'));
+        //m_app.set('views', path.join(__dirname, '../views'));
+        
+
+        m_app.set('views', path.join(__dirname, CONFIG.VIEWS_PATH));
         m_app.set('view engine', 'ejs');
 
         m_app.use(function(req, res, next) {
