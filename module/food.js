@@ -2,7 +2,7 @@
 
 function Food() {
     var id          = -1;
-    var uuid        = "";
+    var uid        = "";
     var name        = "";
     var picture     = "";
     var material    = "";

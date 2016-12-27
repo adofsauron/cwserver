@@ -26,8 +26,8 @@ function DB_Process ()
 
     // add user
     this.m_AddUser = function(user, callback) {
-        var sql = 'INSERT INTO user(name, passwd) VALUES(?, ?)';
-        var sql_params = [user.name, user.passwd];
+        var sql = 'INSERT INTO user(uid, name, passwd) VALUES(?, ?, ?)';
+        var sql_params = [user.uid, user.name, user.passwd];
 
         PoolExecute(sql, sql_params, callback);
     }

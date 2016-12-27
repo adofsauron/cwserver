@@ -2,7 +2,7 @@
 
 function Shop() {
     var id          = -1;
-    var uuid        = "";
+    var uid        = "";
     var name        = "";
     var picture     = "";
     var site        = "";

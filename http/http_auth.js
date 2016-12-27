@@ -30,7 +30,7 @@ function HTTP_auth()
             user = req.session.user = {};
         }
 
-        user.uid     = uuid.v4();
+        user.uid     = _user.uid;
         user.name    = _user.name;
         user.passwd  = _user.passwd;
 
@@ -66,6 +66,7 @@ function HTTP_auth()
                     logger_error.warn('db has no this user: ' + user.name + ':' + user.passwd);
                     res.status(400).end('db has no this user: ' + user.name + ':' + user.passwd);
                 } else {
+                    user.uid = data[0].uid;
                     m_emitter.emit('SetSession', user, req);
                     res.status(200).end('set session success: ' + user.name);
                 }
@@ -78,6 +79,7 @@ function HTTP_auth()
         var body    = req.body;
         var name    = body.name;
         var passwd  = body.passwd;
+        var uid    = uuid.v4();
 
         if ( (!name) || (!passwd) ) {
             res.status(401).end('no name or passwd');
@@ -87,7 +89,7 @@ function HTTP_auth()
             res.status(401).end('name is not email');
         }
 
-        var user = {name:name, passwd:passwd};
+        var user = {uid:uid, name:name, passwd:passwd};
 
         db_user_process.m_FindOneUser(user, function(err, data) {
             if (err) {

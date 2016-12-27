@@ -1,32 +1,31 @@
 -- db desc
 
-create database cate;
-use cate;  
+-- create database cate;
+-- use cate;  
 
 CREATE TABLE IF NOT EXISTS `user`
 (
     id            INT(20)    NOT NULL   AUTO_INCREMENT,
-    uuid          CHAR(128)  NOT NULL,  -- uuid,作为对应文件夹的名字
+    uid          CHAR(128)  NOT NULL,    -- uuid,作为对应文件夹的名字
     name          CHAR(20)   NOT NULL,   -- 用户名, 邮箱
     passwd        CHAR(20)   NOT NULL,   -- 密码
 
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
 
-
 -- 食物
 CREATE TABLE IF NOT EXISTS `food`
 (
     id              INT(20)     NOT NULL   AUTO_INCREMENT,
-    uuid            CHAR(128)   NOT NULL,
+    uid            CHAR(128)   NOT NULL,
     name            CHAR(20)    NOT NULL,  -- 食物名字
     picture         CHAR(80)    NOT NULL,  -- 食物图片位置(文件夹)/main.*
     material        CHAR(80)    NOT NULL,  -- 食材
-    history         CHAR(500)   NOT NULL,  -- 历史
+    history         CHAR(250)   NOT NULL,  -- 历史
     site            CHAR(80)    NOT NULL,  -- 地域
 
-    make_type       INT(1)      NOT NULL;  -- 制作工艺 类型 1:视频，2:图片
-    make_step       CHAR(500)   NOT NULL;  -- 制作步骤，json的string形式，视频则只有地址，图片介绍分步骤
+    make_type       INT(1)      NOT NULL,  -- 制作工艺 类型 1:视频，2:图片
+    make_step       CHAR(250)   NOT NULL,  -- 制作步骤，json的string形式，视频则只有地址，图片介绍分步骤
 
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
@@ -35,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `food`
 CREATE TABLE IF NOT EXISTS `shop`
 (
     id            INT(20)       NOT NULL   AUTO_INCREMENT,
-    uuid          CHAR(128)     NOT NULL,
+    uid          CHAR(128)     NOT NULL,
     name          CHAR(20)      NOT NULL,   -- 店铺名字
     picture       CHAR(40)      NOT NULL,   -- 店铺图片(文件夹)
     site          CHAR(20)      NOT NULL,   -- 地域
@@ -43,7 +42,6 @@ CREATE TABLE IF NOT EXISTS `shop`
 
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
-
 
 -- 食物和商铺的关系表，n:n的关系 foo relate shop
 CREATE TABLE IF NOT EXISTS `frs`
@@ -76,12 +74,11 @@ CREATE TABLE IF NOT EXISTS `crs`
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
 
-
 -- comment 点评
 CREATE TABLE IF NOT EXISTS `comment`
 (
     id            INT(20)       NOT NULL   AUTO_INCREMENT,
-    content       CHAR(500)     NOT NULL,   -- 内容
+    content       CHAR(250)     NOT NULL,   -- 内容
     user_id       INT(20)       NOT NULL,   -- user id
     shop_id       INT(20)       NOT NULL,   -- shop id
 
