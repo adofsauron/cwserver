@@ -1,4 +1,6 @@
 #!/bin/bash
 
+WEB_DIR=/home/work/webserver
+
 pkill node
-./forStart.sh
+$WEB_DIR/forStart.sh

@@ -89,39 +89,3 @@ exports.IsEmail = function (str) {
     return reg.test(str);
 }
 
-UploadFile = function(req, res, newTaskFolder, pic_names) {
-    var form = new multiparty.Form();
-    form.encoding = 'utf-8';
-    form.uploadDir = newTaskFolder;
-    form.maxFilesSize = 2 * 1024 * 1024;
-    //form.maxFields = 1000;  设置所以文件的大小总和
-
-    form.parse(req, function(err, fields, files) {
-         if (err) {
-            logger_error.error(err.message);
-            res.writeHead(400, {'content-type': 'text/plain'});
-            res.end("invalid request: " + err.message);
-            return;
-        }
-
-        var text = {}
-
-        logger.debug("fields: ");
-        //logger.debug(fields);
-
-
-        // fields 是文本域
-        for (var i in fields) {
-            logger.debug(i + ", " + fields[i][0])
-            // TODO 填写表单
-       
-        }
-
-        // files 是上传的文件
-        logger.debug('-------------');
-        logger.debug("files");
-        logger.debug(files)
-    
-  })
-
-}

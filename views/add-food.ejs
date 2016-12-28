@@ -12,37 +12,68 @@
 
     <p>uid:&nbsp;&nbsp;<%= uid %></p> 
 
+
     <%
       url = WrapRoute('/do/add-food') + '/' + uid;
     %>
 
 
     <form action="<%= url %>"  enctype="multipart/form-data" method="post">
-        <p>uid:<input  name="uid" value=<%= uid %> /></p>
+        <p><input type="hidden"  name="uid" value=<%= uid %> /></p>
 		
         <p>名字: <input type="text" name="name" /></p>
 		    <p>图片: <input type="file" name="pic_main" multiple="multiple" accept=""/></p>
         <p>食材: <input type="text" name="material" /></p>
         <p>历史: <textarea  cols="40" rows="5" name="history" ></textarea></p>
-        <p>地域: <input type="text" name="site" /></p><hr>
-        
-        <p><input type="radio" name="make_type" value="mt_1"/>视频介绍</p>    
-        <p><input type="radio" name="make_type" value="mt_2"/>图片文字介绍</p><hr>    
-        
-        
-        
-        <p>视频上传: <input type="file" name="up_vedio" multiple="multiple"/></p><hr>
-        
-        <p>步骤一描述:<textarea  cols="40" rows="5" name="ms_1" ></textarea></p>	
-        <p>步骤一图片:<input type="file" name="pic_1" multiple="multiple"/></p><hr>
-        
-        
-        <p>步骤二描述:<textarea  cols="40" rows="5" name="ms_2" ></textarea></p>
-        <p>步骤二图片:<input type="file" name="pic_2" multiple="multiple"/></p><hr>
+        <p>地域:
 
-        <p>步骤三描述:<textarea  cols="40" rows="5" name="ms_3" ></textarea></p>
-        <p>步骤三图片:<input type="file" name="pic_3" multiple="multiple"/></p><hr>
+        <select>
+          <option name="site" value="BJ">北京</option>
+          <option name="site" value="XA">西安</option>
+          <option name="site" value="CJ">重庆</option>
+          <option name="site" value="GZ">广州</option>
+        </select>
+        </P><hr>
         
+        <script type="text/javascript">
+          function showVedio(){
+            document.getElementById("VEDIO").style.display="";
+            document.getElementById("PIC").style.display="none";	
+          }
+
+          function showPic(){
+            document.getElementById("VEDIO").style.display="none";
+            document.getElementById("PIC").style.display="";		
+          }
+        </script>
+
+
+        <p><input type="radio" name="make_type" value="mt_1" onclick="showVedio();"/>视频介绍</p>    
+        <p><input type="radio" name="make_type" value="mt_2" onclick="showPic();"/>图片文字介绍</p><hr>
+        
+        
+        <div id="VEDIO" style="display:none;"><p>视频上传: <input type="file" name="up_vedio" multiple="multiple"/></p></div>
+
+        <div id="PIC" style="display:none;"
+
+        <%
+          for(var i=1; i<4; ++i) {
+            var step_desc = "步骤" + i + "描述"
+            var step_pic  = "步骤" + i + "图片"
+            var des_name  = "ms_" + i;
+            var pic_name  = "pic_" + i;
+
+        %>
+
+        <p><%=step_desc%>:<textarea cols="40" rows="5" name="<%=des_name%>"></textarea></p>	
+        <p><%=step_pic%>:<input type="file" name="<%=pic_name%>" multiple="multiple"/></p><hr>
+
+        <%
+
+          }
+        %>
+        </div>
+      
         <input type="submit" value="提交" style="width:400px;color:red;"/>
     </form>
 

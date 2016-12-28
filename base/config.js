@@ -1,6 +1,6 @@
 // 此文件中，是程序所有的配置属性，此后的配置也应在此文件添加
 
-const WEB_SERVER_PATH           = '.';
+const WEB_SERVER_PATH           = '/home/work/webserver';
            
 exports.LOG_FILES               = WEB_SERVER_PATH + '/' + 'logs/webserver.log';         // debug/info    
 exports.LOG_FILES_ERROR         = WEB_SERVER_PATH + '/' + 'logs/webserver_error.log';   // warn/error
