@@ -1,5 +1,6 @@
 // food
 
+var fs              = require("fs");
 var uuid            = require('node-uuid');
 var multiparty      = require('multiparty');
 var events          = require('events') ;
@@ -9,6 +10,7 @@ var logger_error    = require('../common/logger.js').logger_error;
 var Tools           = require('../base/tools.js');
 var CONFIG          = require('../base/config.js');
 var fs_sync         = require('../common/fs_sync.js');
+var db_food_process = require('../db/db_food_process.js');
 
 function HTTP_Food() 
 {
@@ -18,7 +20,7 @@ function HTTP_Food()
 
     // 事件注册
     function InitEmitter() {
-        
+         m_emitter.on('UploadFile', UploadFile);
     }
 
 
@@ -43,12 +45,57 @@ function HTTP_Food()
     }
 
 
- function UploadFile(req, res, newTaskFolder, pic_names) {
+  function food_foom2tb(food_form) {
+	var food_tb = {}
+	
+    food_tb.uid         = food_form.uid;
+	food_tb.name 		= food_form.name;
+	food_tb.pic_main 	= food_form.pic_main;
+	food_tb.history 	= food_form.history;
+	food_tb.site 		= food_form.site;
+	food_tb.material	= food_form.material;
+    food_tb.make_type   = food_form.make_type;
+    food_tb.vedio_type  = food_form.vedio_type;
+    
+	
+	var mk_type = food_form.make_type; // mt_1:vedio, 2:pic
+	var vedio_type = food_form.vedio_type; // vedio_1:upload, 2:http://swf
+	
+	var content = "";
+	
+	if (mk_type == "mt_vedio") {
+		content = food_form.make_content;
+    } else if (mk_type == "mt_pic") {
+        food_tb.vedio_type = "NULL";
+        var step_num = Number( new String( food_form.step_num ));
+		var js_con = {}
+        // 注意，要指定从1开始
+		for (var i=1; i < step_num; ++i) {
+			var ms = food_form["ms_" + i];
+			var pic = food_form["pic_" + i]
+			var cot = ms + '|' + pic;
+			js_con[i] = cot;
+		}
+		content = JSON.stringify(js_con);
+		
+	} else {
+		content = "NULL";
+	}
+	
+	food_tb.make_content = content;
+	return food_tb;
+	
+}
+  
+
+
+ function UploadFile(req, res, newTaskFolder) {
     var form = new multiparty.Form();
     form.encoding = 'utf-8';
     form.uploadDir = newTaskFolder;
+    form.keepExtensions = true; // 保留后缀
     form.maxFilesSize = 2 * 1024 * 1024;
-    //form.maxFields = 1000;  设置所以文件的大小总和
+    form.maxFields = 5000;  //设置所有文件的大小总和
 
     form.parse(req, function(err, fields, files) {
          if (err) {
@@ -58,23 +105,60 @@ function HTTP_Food()
             return;
         }
 
-        var text = {}
-
-        logger.debug("fields: ");
-        //logger.debug(fields);
-
+        var food_form = {};
 
         // fields 是文本域
         for (var i in fields) {
-            logger.debug(i + ", " + fields[i][0])
+            var field = fields[i][0];
+            if (field == '') {
+                continue;
+            }
+
+            logger.debug(i + "\t" + field);
             // TODO 填写表单
+
+            food_form[i] = field;
        
         }
 
         // files 是上传的文件
         logger.debug('-------------');
-        logger.debug("files");
-        logger.debug(files)
+
+        for (var i in files) {
+            var file = files[i][0];
+            //logger.debug(file);
+
+            if (file.originalFilename == '') {
+                continue;
+            }
+
+            var pName = file.path;
+            var fixName = newTaskFolder + '/' + file.fieldName
+
+            var suffix = Tools.GetSuffix(pName);
+            if (suffix != '') {
+                fixName = fixName + '.' + suffix
+            }
+
+            logger.debug(pName + "\t" + fixName);
+
+            fs.rename(pName, fixName, function(err) {
+                if (err) {
+                    logger_error.error(err.message);
+                }
+            });
+
+            food_form[i] = file.fieldName + '.' + suffix;
+
+        }
+
+        logger.debug(food_form);
+
+        var food_tb = food_foom2tb(food_form);
+
+        logger.debug(food_tb);
+
+        db_food_process.m_AddFood(food_tb)
     
   })
 
@@ -94,9 +178,10 @@ function HTTP_Food()
 
       logger.debug(newTaskFolder)
 
-      var pic_names = {"pic_main":1, "up_vedio":1, "pic_1":1,"pic_2":1, "pic_3":1}
 
-      var text =  UploadFile(req, res, newTaskFolder, pic_names);
+      m_emitter.emit('UploadFile', req, res, newTaskFolder);
+
+      //UploadFile(req, res, newTaskFolder);
 
       res.status(200).end("uid: " + uid);
      

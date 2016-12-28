@@ -1,20 +1,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "www.mobiletrain.org /TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="www.mobiletrain.org ">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>add-food</title>
+	<meta charset="UTF-8">
+
+	<title>add-food</title>
+
+	
 </head>
 
   <body>
 
-        
-    <hr/>
-
-    <p>uid:&nbsp;&nbsp;<%= uid %></p> 
-
+    <p>uid:&nbsp;<%= uid %></p><hr>
 
     <%
-      url = WrapRoute('/do/add-food') + '/' + uid;
+      url = WrapRoute('/add-food') + '/' + uid + '.action';
     %>
 
 
@@ -23,15 +22,15 @@
 		
         <p>名字: <input type="text" name="name" /></p>
 		    <p>图片: <input type="file" name="pic_main" multiple="multiple" accept=""/></p>
-        <p>食材: <input type="text" name="material" /></p>
-        <p>历史: <textarea  cols="40" rows="5" name="history" ></textarea></p>
+        <p>主要食材: <input type="text" name="material" /></p>
+        <p>历史渊源: <textarea  cols="40" rows="5" name="history" ></textarea></p>
         <p>地域:
 
-        <select>
-          <option name="site" value="BJ">北京</option>
-          <option name="site" value="XA">西安</option>
-          <option name="site" value="CJ">重庆</option>
-          <option name="site" value="GZ">广州</option>
+        <select name="site">
+          <option value="BJ" selected="selected">北京</option>
+          <option value="XA">西安</option>
+          <option value="CJ">重庆</option>
+          <option value="GZ">广州</option>
         </select>
         </P><hr>
         
@@ -47,22 +46,42 @@
           }
         </script>
 
+        <p><input type="radio" name="make_type" value="mt_pic" onclick="showPic();"   checked="false"/>图片文字</p>
+        <p><input type="radio" name="make_type" value="mt_vedio" onclick="showVedio();" checked="true"/>视频</p><hr>
 
-        <p><input type="radio" name="make_type" value="mt_1" onclick="showVedio();"/>视频介绍</p>    
-        <p><input type="radio" name="make_type" value="mt_2" onclick="showPic();"/>图片文字介绍</p><hr>
+        <script type="text/javascript">
+          function showVedioUp(){
+            document.getElementById("VEDIO_UP").style.display="";
+            document.getElementById("VEDIO_SWF").style.display="none";	
+          }
+
+          function showVedioSwf(){
+            document.getElementById("VEDIO_UP").style.display="none";
+            document.getElementById("VEDIO_SWF").style.display="";		
+          }
+        </script>
         
         
-        <div id="VEDIO" style="display:none;"><p>视频上传: <input type="file" name="up_vedio" multiple="multiple"/></p></div>
+        <div id="VEDIO" style="display:'';">
+          <p><input type="radio"  name="vedio_type" value="vedio_up" onclick="showVedioUp();"  checked="false"/>视频上传</p>    
+          <p><input type="radio"  name="vedio_type" value="vedio_swf" onclick="showVedioSwf();" checked="true"/>视频外链swf</p><hr>
+
+          <div id="VEDIO_UP" style="display:none"><p>视频上传: <input type="file" name="make_content" multiple="multiple"/></p> </div>
+          <div id="VEDIO_SWF" style="display:''"><p>视频外链swf: <input type="text" name="make_content" /></p> </div> <hr>
+        </div>
 
         <div id="PIC" style="display:none;"
-
+          
         <%
-          for(var i=1; i<4; ++i) {
+          var step_num = 4;
+         %>
+            <p><input type="hidden"  name="step_num" value=<%= step_num %> /></p>
+         <% 
+          for(var i=1; i < step_num; ++i) {
             var step_desc = "步骤" + i + "描述"
             var step_pic  = "步骤" + i + "图片"
             var des_name  = "ms_" + i;
             var pic_name  = "pic_" + i;
-
         %>
 
         <p><%=step_desc%>:<textarea cols="40" rows="5" name="<%=des_name%>"></textarea></p>	
@@ -77,7 +96,7 @@
         <input type="submit" value="提交" style="width:400px;color:red;"/>
     </form>
 
-    <hr/>
+    <hr/
 
     <p><a href="admin.html">管理主页</a></p>
 

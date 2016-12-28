@@ -89,3 +89,14 @@ exports.IsEmail = function (str) {
     return reg.test(str);
 }
 
+// 获取文件的后缀名
+
+exports.GetSuffix = function(filename) {
+	var index1=filename.lastIndexOf(".");  
+    if (index1 < 0) {
+		return ''
+	}
+	var index2=filename.length;
+	var postf=filename.substring(index1+1,index2);
+	return postf
+}

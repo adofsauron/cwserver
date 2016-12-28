@@ -26,8 +26,10 @@ function DB_Process ()
 
     // add user
     this.m_AddFood = function(food, callback) {
-        var sql = 'INSERT INTO food(uid, name, material, history, site, make_type, make_step) VALUES(?,?,?,?,?,?,?)';
-        var sql_params = [food.uid, food.name, food.material, food.history, food.site, food.make_type, food.make_step];
+        var sql = 'INSERT INTO food(uid, name, material, history, site, make_type, make_content, vedio_type, pic_main) \
+             VALUES(?,?,?,?,?,?,?,?,?)';
+        var sql_params = [food.uid, food.name, food.material, 
+            food.history, food.site, food.make_type, food.make_content, food.vedio_type, food.pic_main];
 
         PoolExecute(sql, sql_params, callback);
     }

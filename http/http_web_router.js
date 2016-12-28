@@ -27,9 +27,9 @@ router.post ('/do/register',              http_auth.m_Register);                
 
 // admin
 router.get  ('/do/admin',                 http_auth.m_auth, http_model.m_Login);       // check auth, if no then login
-router.post ('/do/login',                 http_auth.m_Login);                          // post form login
+router.post ('/login.action',                 http_auth.m_Login);                          // post form login
 
-router.get  ('/do/add-food',               http_food.m_RenderAddFood);
-router.post ('/do/add-food/:uid',          http_food.m_ExecuteAddFood);
+router.get  ('/add-food.action',               http_food.m_RenderAddFood);
+router.post ('/add-food/:uid.action',          http_food.m_ExecuteAddFood);
 
 module.exports = router;
