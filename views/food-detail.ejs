@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "www.mobiletrain.org /TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="www.mobiletrain.org ">
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<meta name="format-detection" content="telephone=no,email=no"/>
+
+	<title>food-intro</title>
+
+    <link rel="stylesheet" href="/css/swiper.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/common.css">
+	<link rel="stylesheet" type="text/css" href="/css/food_detail.css">
+	<script src="/js/jquery-1.9.1.min.js"></script>
+	<script src="/js/swipe.js"></script>
+	<script src="/js/common.js"></script>
+	<script>
+	//适配		
+		$(window).on('resize', function () {
+			var w = $(window).width();
+	    	$('html').css('font-size',(w/375*100) + 'px') ;
+	 	}).triggerHandler('resize') ;
+	</script>
+
+	
+</head>
+
+  <body>
+
+    
+
+    <% 
+        var detail = JSON.parse(ret);
+    %>
+
+
+	
+    <div class="slide">
+		<div id='swipe' class='swipe'>
+		  <div class='swipe-wrap'>
+
+          <%
+           
+            var pics = JSON.parse( detail.pic_main );
+            var pic_num = detail.pic_num;
+            for (var i=1; i<=pic_num; ++i) {
+          %>
+
+            <img src="/upload/<%=detail.uid%>/<%= pics[i]%>">
+
+          <%      
+            }
+
+          %>
+		  </div>
+		</div>
+	    <ul id="dot">
+            <li class="on"></li>
+          <%
+            for (var i=1; i<=pic_num-1; ++i) {
+           %>
+            <li class=""></li>
+           <%     
+            }
+          %>
+
+		</ul>
+	</div>
+
+	<a class="back" href="javascript:history.back(-1)">
+		<img src="/image/icon/back.png">
+	</a>
+	<div class="like">
+		<img src="/image/icon/like.png">
+	</div>
+
+
+
+    <div class="section">
+		<div class="title">
+			<h2><%= detail.name%></h2>
+		</div>
+		<div class="content">
+			<div class="content_detail">
+				<div class="detail_title">历史渊源：</div>
+				<div class="detail"><%= detail.history%></div>
+			</div>
+			<div class="content_detail">
+				<div class="detail_title">主要食材：</div>
+				<div class="detail"><%= detail.material%></div>
+			</div>
+		</div>
+	</div>
+
+
+    <div class="section" style="margin-top:-0.18rem">
+		<div class="title">
+			<p>制作工艺</p>
+		</div>
+
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+
+    <%
+        var make_type = detail.make_type;
+
+        if (make_type == 'mt_vedio') {
+
+        } else if (make_type == 'mt_pic') {
+
+            var content = JSON.parse( detail.make_content);
+            var step_num = detail.step_num;
+
+            for (var i=1; i<=step_num; ++i) {
+                var cont = content[i];
+                var cont_spt = cont.split('|');
+                var step_desc = cont_spt[0];
+                var step_pic = cont_spt[1];
+     %>
+                <div class="swiper-slide">
+					<div class="cd">
+						<img src="/upload/<%=detail.uid%>/<%=step_pic%>">
+						<p><span class="active"><%=i%></span>&nbsp;<%=step_desc%></p>
+					</div>
+				</div>
+     
+     <%       
+
+            }
+
+        } else {
+
+        }
+    %>
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+    <footer>
+		<li>
+			<a href="/food-intro/BJ.action">
+				<img src="/image/icon/find_active.png">
+				<p class="active">发现</p>
+			</a>
+		</li>
+		<li>
+			<a href="select.html">
+				<img src="/image/icon/select.png">
+				<p>精选</p>
+			</a>
+		</li>
+		<li>
+			<a href="user.html">
+				<img src="/image/icon/user.png">
+				<p>我的</p>
+			</a>
+		</li>
+	</footer>
+	<script>
+		$('.location').click(function(){
+			$('.city_change').toggleClass("city_open");
+		});
+		$('.city_change li').click(function(){
+			$(this).addClass('active');
+			$(this).siblings().removeClass('active');
+			$('.city_change').removeClass('city_open');
+		});
+	</script>
+
+    <script>
+	// slide
+	var elem = document.getElementById('swipe');
+	window.swipe = Swipe(elem, {
+	  	// auto: 2000,
+	  	continuous: true,
+	  	callback: function(pos) {
+	    var i = bullets.length;
+	    while (i--) {
+	      bullets[i].className = ' ';
+	    }
+	    bullets[pos].className = 'on';
+	    }
+	});
+	var bullets = document.getElementById('dot').getElementsByTagName('li');
+	</script>
+	<!-- Swiper JS -->
+	<script src="/js/swiper.min.js"></script>
+
+	<!-- Initialize Swiper -->
+	<script>
+		var swiper = new Swiper('.swiper-container', {
+			pagination: '.swiper-pagination',
+			slidesPerView: 'auto',
+			paginationClickable: true,
+//          grabCursor : true,
+//          setWrapperSize :true,
+			spaceBetween: 30
+		});
+	</script>
+
+  </body>
+</html>

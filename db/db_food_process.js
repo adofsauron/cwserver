@@ -26,10 +26,10 @@ function DB_Process ()
 
     // add user
     this.m_AddFood = function(food, callback) {
-        var sql = 'INSERT INTO food(uid, name, material, history, site, make_type, make_content, vedio_type, pic_main) \
-             VALUES(?,?,?,?,?,?,?,?,?)';
+        var sql = 'INSERT INTO food(uid, name, material, history, site, make_type, make_content, vedio_type, pic_main, pic_num, step_num) \
+             VALUES(?,?,?,?,?,?,?,?,?,?,?)';
         var sql_params = [food.uid, food.name, food.material, 
-            food.history, food.site, food.make_type, food.make_content, food.vedio_type, food.pic_main];
+            food.history, food.site, food.make_type, food.make_content, food.vedio_type, food.pic_main, food.pic_num, food.step_num];
 
         PoolExecute(sql, sql_params, callback);
     }
@@ -43,9 +43,9 @@ function DB_Process ()
     } 
 
     // find one food by food.id and passwd
-    this.m_FindOneById = function(food, callback) {
+    this.m_FindOneById = function(id, callback) {
         var sql = 'SELECT * from food where id= ?';
-        var sql_params = [food.id];
+        var sql_params = [id];
          
         PoolExecute(sql, sql_params, callback);
     }
@@ -64,7 +64,14 @@ function DB_Process ()
         var sql_params = [name];
 
         PoolExecute(sql, sql_params, callback);
-    }  
+    }
+
+    this.m_GetIntroBySite = function(site, callback) {
+        var sql = 'SELECT id,uid,name,pic_main,material FROM food WHERE site = ?';
+        var sql_params = [site];
+
+        PoolExecute(sql, sql_params, callback);
+    }
 };
 
 module.exports = new DB_Process;

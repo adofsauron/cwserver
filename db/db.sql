@@ -19,15 +19,17 @@ CREATE TABLE IF NOT EXISTS `food`
     id              INT(20)     NOT NULL   AUTO_INCREMENT,
     uid             CHAR(128)   NOT NULL,
     name            CHAR(20)    NOT NULL,  -- 食物名字
-    pic_main        CHAR(240)   NOT NULL,  -- 食物图片位置
+    pic_main        CHAR(240)   NOT NULL,  -- 食物图片
+    pic_num         INT(4)      NOT NULL,  -- 食物主图片个数
     material        CHAR(80)    NOT NULL,  -- 食材
     history         CHAR(250)   NOT NULL,  -- 历史
     site            CHAR(80)    NOT NULL,  -- 地域
 
-    make_type       CHAR(10)      NOT NULL,  -- 制作工艺 类型 
+    make_type       CHAR(10)    NOT NULL,  -- 制作工艺 类型 
     make_content    CHAR(250)   NOT NULL,  -- 制作步骤，json的string形式，视频则只有地址，图片介绍分步骤
+    step_num        INT(4)      NOT NULL,  -- 多少个步骤
 
-    vedio_type      CHAR(10)      NOT NULL,  -- 视频类型
+    vedio_type      CHAR(10)    NOT NULL,  -- 视频类型
 
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
@@ -38,9 +40,12 @@ CREATE TABLE IF NOT EXISTS `shop`
     id            INT(20)       NOT NULL   AUTO_INCREMENT,
     uid           CHAR(128)     NOT NULL,
     name          CHAR(20)      NOT NULL,   -- 店铺名字
-    picture       CHAR(40)      NOT NULL,   -- 店铺图片(文件夹)
+    pic_main      CHAR(40)      NOT NULL,   -- 店铺图片
+    pic_num       INT(4)        NOT NULL,   -- 店铺图片个数
     site          CHAR(20)      NOT NULL,   -- 地域
-    classify      CHAR(20)      NOT NULL,   -- 类别
+    classify      CHAR(250)     NOT NULL,   -- 类别
+    locate        CHAR(200)     NOT NULL,   -- 具体地址
+    cost          INT(10)       NOT NULL,   -- 价格 (元/位)
 
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;

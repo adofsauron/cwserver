@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "www.mobiletrain.org /TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="www.mobiletrain.org ">
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<meta name="format-detection" content="telephone=no,email=no"/>
+
+	<title>food-intro</title>
+
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+	<link rel="stylesheet" type="text/css" href="/css/index.css">
+	<script src="/js/jquery-1.9.1.min.js"></script>
+	<script src="/js/common.js"></script>
+	<script>
+	//适配		
+		$(window).on('resize', function () {
+			var w = $(window).width();
+	    	$('html').css('font-size',(w/375*100) + 'px') ;
+	 	}).triggerHandler('resize') ;
+	</script>
+
+	
+</head>
+
+  <body>
+
+    <header>
+		<div class="location">
+			<img class="loc_img" src="/image/icon/pos.png">
+			<div class="city_choose">北京<img src="/image/icon/down.png"></div>
+		</div>
+		<div class="search">
+			<img src="/image/icon/search.png">
+			<input type="text" placeholder="搜索美食、餐厅"></input>
+		</div>
+	</header>
+
+    <div class="city_change">
+		<li class="active">北京</li>
+		<li>西安</li>
+		<li>重庆</li>
+		<li>广州</li>
+	</div>
+
+    <div class="wrapper">
+
+    <% 
+        var intro = JSON.parse(ret);
+        for (var i=0; i<intro.length; ++i) {
+            var pics = JSON.parse( intro[i].pic_main );
+
+    %>
+                
+                <a class="section" href="/food-detail/<%= intro[i].id%>.action">
+                    <img src="/upload/<%=intro[i].uid%>/<%= pics[1]%>">
+                    <h1><%= intro[i].name%></h1>
+                    <p>主要食材：<%= intro[i].material%></p>
+                </a>
+    <%
+        }
+    
+    %>
+
+    </div>
+
+
+    	<footer>
+		<li>
+			<a href="index.html">
+				<img src="/image/icon/find_active.png">
+				<p class="active">发现</p>
+			</a>
+		</li>
+		<li>
+			<a href="select.html">
+				<img src="/image/icon/select.png">
+				<p>精选</p>
+			</a>
+		</li>
+		<li>
+			<a href="user.html">
+				<img src="/image/icon/user.png">
+				<p>我的</p>
+			</a>
+		</li>
+	</footer>
+	<script>
+		$('.location').click(function(){
+			$('.city_change').toggleClass("city_open");
+		});
+		$('.city_change li').click(function(){
+			$(this).addClass('active');
+			$(this).siblings().removeClass('active');
+			$('.city_change').removeClass('city_open');
+		});
+	</script>
+
+
+  </body>
+</html>

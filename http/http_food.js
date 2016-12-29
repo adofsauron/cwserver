@@ -50,12 +50,22 @@ function HTTP_Food()
 	
     food_tb.uid         = food_form.uid;
 	food_tb.name 		= food_form.name;
-	food_tb.pic_main 	= food_form.pic_main;
 	food_tb.history 	= food_form.history;
 	food_tb.site 		= food_form.site;
 	food_tb.material	= food_form.material;
     food_tb.make_type   = food_form.make_type;
     food_tb.vedio_type  = food_form.vedio_type;
+    food_tb.step_num    = food_form.step_num;
+
+    var pic_num = Number(food_form.pic_num);
+    food_tb.pic_num = pic_num;
+
+    var Jpic_main = {};
+    for (var i=1; i<=pic_num; ++i)  {
+        Jpic_main[i] = food_form["pic_main_" + i];
+    }
+
+    food_tb.pic_main = Tools.Json2Str(Jpic_main);
     
 	
 	var mk_type = food_form.make_type; // mt_1:vedio, 2:pic
@@ -89,106 +99,141 @@ function HTTP_Food()
   
 
 
- function UploadFile(req, res, newTaskFolder) {
-    var form = new multiparty.Form();
-    form.encoding = 'utf-8';
-    form.uploadDir = newTaskFolder;
-    form.keepExtensions = true; // 保留后缀
-    form.maxFilesSize = 2 * 1024 * 1024;
-    form.maxFields = 5000;  //设置所有文件的大小总和
+    function UploadFile(req, res, newTaskFolder, uid) {
+        var form = new multiparty.Form();
+        form.encoding = 'utf-8';
+        form.uploadDir = newTaskFolder;
+        form.keepExtensions = true; // 保留后缀
+        form.maxFilesSize = 2 * 1024 * 1024;
+        form.maxFields = 5000;  //设置所有文件的大小总和
 
-    form.parse(req, function(err, fields, files) {
-         if (err) {
-            logger_error.error(err.message);
-            res.writeHead(400, {'content-type': 'text/plain'});
-            res.end("invalid request: " + err.message);
-            return;
-        }
-
-        var food_form = {};
-
-        // fields 是文本域
-        for (var i in fields) {
-            var field = fields[i][0];
-            if (field == '') {
-                continue;
+        form.parse(req, function(err, fields, files) {
+            if (err) {
+                logger_error.error(err.message);
+                res.writeHead(400, {'content-type': 'text/plain'});
+                res.end("invalid request: " + err.message);
+                return;
             }
 
-            logger.debug(i + "\t" + field);
-            // TODO 填写表单
+            var food_form = {};
 
-            food_form[i] = field;
-       
-        }
-
-        // files 是上传的文件
-        logger.debug('-------------');
-
-        for (var i in files) {
-            var file = files[i][0];
-            //logger.debug(file);
-
-            if (file.originalFilename == '') {
-                continue;
-            }
-
-            var pName = file.path;
-            var fixName = newTaskFolder + '/' + file.fieldName
-
-            var suffix = Tools.GetSuffix(pName);
-            if (suffix != '') {
-                fixName = fixName + '.' + suffix
-            }
-
-            logger.debug(pName + "\t" + fixName);
-
-            fs.rename(pName, fixName, function(err) {
-                if (err) {
-                    logger_error.error(err.message);
+            // fields 是文本域
+            for (var i in fields) {
+                var field = fields[i][0];
+                if (field == '') {
+                    continue;
                 }
-            });
 
-            food_form[i] = file.fieldName + '.' + suffix;
+                logger.debug(i + "\t" + field);
+                food_form[i] = field;
+            }
 
-        }
+            // files 是上传的文件
+            logger.debug('-------------');
+            for (var i in files) {
+                var file = files[i][0];
+                logger.debug(file);
 
-        logger.debug(food_form);
+                if (file.originalFilename == '') {
+                    continue;
+                }
+                var pName = file.path;
+                var fixName = newTaskFolder + '/' + file.fieldName
 
-        var food_tb = food_foom2tb(food_form);
+                var suffix = Tools.GetSuffix(pName);
+                if (suffix != '') {
+                    fixName = fixName + '.' + suffix
+                }
 
-        logger.debug(food_tb);
+                //logger.debug(pName + "\t" + fixName);
 
-        db_food_process.m_AddFood(food_tb)
-    
-  })
+                fs.rename(pName, fixName, function(err) {
+                    if (err) {
+                        logger_error.error(err.message);
+                    }
+                });
 
-}
+                food_form[i] =  file.fieldName + '.' + suffix;
+            }
+
+            //logger.debug(food_form);
+            var food_tb = food_foom2tb(food_form);
+            logger.debug(food_tb);
+            db_food_process.m_AddFood(food_tb)
+        
+        })
+
+    }
   
-  this.m_ExecuteAddFood = function(req, res) {
-      var body    = req.body;
+    this.m_ExecuteAddFood = function(req, res) {
+        var body = req.body;
+        var uid = req.params.uid;
+        logger.debug(uid);
+        var newTaskFolder = CONFIG.UPLOAD_PATH + '/' + uid;
+        logger.debug(newTaskFolder);
+        m_emitter.emit('UploadFile', req, res, newTaskFolder, uid);
+        res.status(200).end("uid: " + uid);
+    }
 
 
-       var uid = req.params.uid;
+    this.m_GetIntroBySite = function(req, res) {
+        var body = req.body;
+        var site = req.params.site;
 
-       logger.debug(uid);
+        db_food_process.m_GetIntroBySite(site, function(err, result){
+            logger.debug(result);
+
+            var num = result.length;
+            logger.debug(num);
+
+            for (var i=0; i<num; ++i) {
+                logger.debug(result[i]);
+            }
+
+            var ret = Tools.Json2Str(result);
+            logger.debug(ret);
+
+            var proxyRoute = req.header("x-proxy-route") ? req.header("x-proxy-route") : CONFIG.PROXY_ROUTE;
+            var mejs = { 
+                ret  : ret,
+                //csrfToken  : req.csrfToken(),
+                WrapRoute  : function(x) { 
+                    return function(y) { 
+                        return Tools.WrapRoute(x, y);
+                    }
+                } (proxyRoute),
+            };
+            
+            res.render('food-intro', mejs);
 
 
-      var newTaskFolder = CONFIG.UPLOAD_PATH + '/' + uid;
+        });
+    }
 
+    this.m_GetFoodDetail = function(req, res){
+        var body = req.body;
+        var id = Number( req.params.id );
 
-      logger.debug(newTaskFolder)
+        db_food_process.m_FindOneById(id, function(err, result){
+            var ret = Tools.Json2Str(result[0]);
+            var proxyRoute = req.header("x-proxy-route") ? req.header("x-proxy-route") : CONFIG.PROXY_ROUTE;
+            var mejs = { 
+                ret  : ret,
+                //csrfToken  : req.csrfToken(),
+                WrapRoute  : function(x) { 
+                    return function(y) { 
+                        return Tools.WrapRoute(x, y);
+                    }
+                } (proxyRoute),
+            };
 
+            logger.debug(ret);
+            
+            res.render('food-detail', mejs);
 
-      m_emitter.emit('UploadFile', req, res, newTaskFolder);
+        });
 
-      //UploadFile(req, res, newTaskFolder);
-
-      res.status(200).end("uid: " + uid);
-     
-
-
-     
-  }
+    }
 
 }
 

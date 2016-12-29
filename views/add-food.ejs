@@ -21,7 +21,17 @@
         <p><input type="hidden"  name="uid" value=<%= uid %> /></p>
 		
         <p>名字: <input type="text" name="name" /></p>
-		    <p>图片: <input type="file" name="pic_main" multiple="multiple" accept=""/></p>
+
+        <%
+          var pic_num = 4;
+          for (var i=1; i<=pic_num; ++i) {
+         %>
+            <p>图片<%=i%>: <input type="file" name="pic_main_<%=i%>" multiple="multiple" accept=""/></p>
+         <%   
+          }
+        %>
+        <p><input type="hidden"  name="pic_num" value="<%= pic_num %>" /></p>
+
         <p>主要食材: <input type="text" name="material" /></p>
         <p>历史渊源: <textarea  cols="40" rows="5" name="history" ></textarea></p>
         <p>地域:
@@ -73,11 +83,11 @@
         <div id="PIC" style="display:none;"
           
         <%
-          var step_num = 4;
+          var step_num = 3;
          %>
-            <p><input type="hidden"  name="step_num" value=<%= step_num %> /></p>
+            <p><input type="hidden"  name="step_num" value="<%= step_num %>" /></p>
          <% 
-          for(var i=1; i < step_num; ++i) {
+          for(var i=1; i <= step_num; ++i) {
             var step_desc = "步骤" + i + "描述"
             var step_pic  = "步骤" + i + "图片"
             var des_name  = "ms_" + i;
