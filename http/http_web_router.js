@@ -5,7 +5,7 @@ var http_provideFile  = require('./http_providefile.js');
 var http_auth         = require('./http_auth.js');
 var http_model        = require('./http_model.js');
 var http_food         = require('./http_food.js');
-
+var http_shop         = require('./http_shop.js');
 
 var router            = require('express').Router();
 
@@ -32,7 +32,12 @@ router.post ('/login.action',             http_auth.m_Login);                   
 router.get  ('/add-food.action',          http_food.m_RenderAddFood);
 router.post ('/add-food/:uid.action',     http_food.m_ExecuteAddFood);
 
-router.get  ('/food-intro/:site.action', http_food.m_GetIntroBySite);
-router.get  ('/food-detail/:id.action',  http_food.m_GetFoodDetail);
+router.get  ('/food-intro/:site.action',  http_food.m_GetIntroBySite);
+router.get  ('/food-detail/:id.action',   http_food.m_GetFoodDetail);
+
+router.get  ('/add-shop.action',          http_shop.m_RenderAddShop);
+router.post ('/add-shop/:uid.action',     http_shop.m_ExecuteAddShop);
+
+router.get  ('/shop-detail/:id.action',   http_shop.m_GetShopDetail);
 
 module.exports = router;

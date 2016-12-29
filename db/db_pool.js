@@ -1,7 +1,7 @@
 // database pool
 
-var Pool	   = require('generic-pool').Pool;
-var mysql      = require('mysql'); 
+var Pool        = require('generic-pool').Pool;
+var mysql       = require('mysql'); 
 
 var CONFIG     = require('../base/config.js');
 

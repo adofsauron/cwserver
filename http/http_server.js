@@ -16,6 +16,7 @@ var logger_error        = require('../common/logger').logger_error;
 var routers             = require('./http_web_router');
 var db_pool             = require('../db/db_pool.js');
 var http_food           = require('./http_food.js');
+var classify            = require('../common/classify.js');
 
 function HTTP_Server()
 {
@@ -53,7 +54,7 @@ function HTTP_Server()
     }
 
     function StaticInit() {
-
+        classify.m_Init();
     }
 
     this.m_Init = function() {

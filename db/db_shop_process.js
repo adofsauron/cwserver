@@ -24,11 +24,21 @@ function DB_Process ()
         });
     }
 
-    // add user
-    this.m_AddUser = function(user, callback) {
-        var sql = 'INSERT INTO user(uid, name, passwd) VALUES(?, ?, ?)';
-        var sql_params = [user.uid, user.name, user.passwd];
+     // add shop
+    this.m_AddShop = function(shop, callback) {
+        var sql = 'INSERT INTO shop(uid, name, locate, brief, site, cost, phone, pic_main, pic_num, classify) \
+             VALUES(?,?,?,?,?,?,?,?,?,?)';
+        var sql_params = [shop.uid, shop.name, shop.locate, shop.brief, 
+                shop.site, shop.cost, shop.phone, shop.pic_main, shop.pic_num, shop.classify];
 
+        PoolExecute(sql, sql_params, callback);
+    }
+
+     // find one food by food.id and passwd
+    this.m_FindOneById = function(id, callback) {
+        var sql = 'SELECT * FROM shop where id= ?';
+        var sql_params = [id];
+         
         PoolExecute(sql, sql_params, callback);
     }
 

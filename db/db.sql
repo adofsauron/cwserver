@@ -40,12 +40,14 @@ CREATE TABLE IF NOT EXISTS `shop`
     id            INT(20)       NOT NULL   AUTO_INCREMENT,
     uid           CHAR(128)     NOT NULL,
     name          CHAR(20)      NOT NULL,   -- 店铺名字
-    pic_main      CHAR(40)      NOT NULL,   -- 店铺图片
+    pic_main      CHAR(250)      NOT NULL,   -- 店铺图片
     pic_num       INT(4)        NOT NULL,   -- 店铺图片个数
+    brief         CHAR(250)     NOT NULL,   -- 简介
     site          CHAR(20)      NOT NULL,   -- 地域
     classify      CHAR(250)     NOT NULL,   -- 类别
     locate        CHAR(200)     NOT NULL,   -- 具体地址
     cost          INT(10)       NOT NULL,   -- 价格 (元/位)
+    phone         char(20)      NOT NULL,   -- 电话
 
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;

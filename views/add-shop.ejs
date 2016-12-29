@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "www.mobiletrain.org /TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="www.mobiletrain.org ">
+<head>
+	<meta charset="UTF-8">
+
+	<title>add-shop</title>
+
+	
+</head>
+
+  <body>
+
+    <% var info = JSON.parse(ret); %>
+
+    <p>uid:&nbsp;<%= info.uid %></p><hr>
+
+    <%
+      url = WrapRoute('/add-shop') + '/' + info.uid + '.action';
+    %>
+
+
+    <form action="<%= url %>"  enctype="multipart/form-data" method="post">
+        <p><input type="hidden"  name="uid" value=<%= info.uid %> /></p>
+		
+        <p>店铺名字: <input type="text" name="name" /></p>
+
+        <%
+          var pic_num = 4;
+          for (var i=1; i<=pic_num; ++i) {
+         %>
+            <p>图片<%=i%>: <input type="file" name="pic_main_<%=i%>" multiple="multiple" accept=""/></p>
+         <%   
+          }
+        %>
+        <p><input type="hidden"  name="pic_num" value="<%= pic_num %>" /></p>
+
+        <p>店铺介绍: <textarea  cols="40" rows="4" name="brief" ></textarea></p>
+        <p>地域:
+
+        <select name="site">
+          <option value="BJ" selected="selected">北京</option>
+          <option value="XA">西安</option>
+          <option value="CJ">重庆</option>
+          <option value="GZ">广州</option>
+        </select>
+        </P>
+
+        <hr/>
+
+        <p>店铺类别:</p>
+        
+       <% 
+            var cfy = info.cfy;
+            var cfy_len =info.cfy_len
+            for (var i=1; i<=cfy_len; ++i) {
+        %>
+            <input type="checkbox" name="classify" value="<%=cfy[i]%>" /><%=cfy[i]%>
+        <%
+            }
+       
+        %>
+
+        <hr/>
+
+        <p>价格(元/位) : <input type="text" name="cost" /></p>
+        <p>详细地址 : <input type="text" name="locate" /></p>
+        <p>电话 : <input type="text" name="phone" /></p><hr/>
+        
+        <input type="submit" value="提交" style="width:400px;color:red;"/>
+    </form>
+
+    <hr/
+
+    <p><a href="admin.html">管理主页</a></p>
+
+  </body>
+</html>
