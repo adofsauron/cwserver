@@ -18,6 +18,8 @@
 * db: 数据库相关
 * http: http协议相关
 * packet: 与其他服务器通信相关
+* data: 程序的数据目录,启动时加载
+* views: ejs渲染加载目录
 
 ### webserver配置文件： ./base/config.js
 
