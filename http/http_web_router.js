@@ -20,10 +20,10 @@ router.get  ('/file-down/:task_id',        http_fileTask.m_DownFileByTaskID);
 router.post ('/file-starttask/:task_id',   http_fileTask.m_StartTask);
 
 // auth
-router.get  ('/do/login',                 http_auth.m_auth, http_model.m_Login);       // check auth, if no then login
-router.post ('/do/login',                 http_auth.m_Login);                          // post form login
-router.get  ('/do/register',              http_model.m_Register)                       // get register html
-router.post ('/do/register',              http_auth.m_Register);                       // post form register
+router.get  ('/login.action',                 http_auth.m_auth, http_model.m_Login);       // check auth, if no then login
+router.post ('/login.action',                 http_auth.m_Login);                          // post form login
+router.get  ('/register.action',              http_model.m_Register)                       // get register html
+router.post ('/register.action',              http_auth.m_Register);                       // post form register
 
 // admin
 router.get  ('/do/admin',                 http_auth.m_auth, http_model.m_Login);       // check auth, if no then login
@@ -37,7 +37,11 @@ router.get  ('/food-detail/:id.action',   http_food.m_GetFoodDetail);
 
 router.get  ('/add-shop.action',          http_shop.m_RenderAddShop);
 router.post ('/add-shop/:uid.action',     http_shop.m_ExecuteAddShop);
-
 router.get  ('/shop-detail/:id.action',   http_shop.m_GetShopDetail);
+router.get  ('/select-shop.action',       http_shop.m_SelectShop);
+router.get  ('/select-detail/:classify.action', http_shop.m_GetSelectDetail);
+
+
+router.get  ('/user.action',             http_auth.m_auth, http_model.m_Login);
 
 module.exports = router;

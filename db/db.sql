@@ -73,12 +73,12 @@ CREATE TABLE IF NOT EXISTS `collect`
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
 
--- class relate shop
-CREATE TABLE IF NOT EXISTS `crs`
+--  shop relate classify(单个) = 1 : n
+CREATE TABLE IF NOT EXISTS `src`
 (
-    id            INT(20)   NOT NULL   AUTO_INCREMENT,
-    classify      CHAR(20)  NOT NULL,   -- 类别
-    shop_id       INT(20)   NOT NULL,   -- shop id
+    id            INT(20)       NOT NULL   AUTO_INCREMENT,
+    shop_id       INT(20)       NOT NULL,   -- shop id
+    classify      CHAR(250)     NOT NULL,   -- 类别
 
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;

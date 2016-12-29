@@ -1,3 +1,5 @@
+// shop relate classify
+
 // db shop process
 
 var db_pool         = require('./db_pool.js');
@@ -5,7 +7,7 @@ var CONFIG          = require('../base/config.js');
 var logger          = require('../common/logger.js').logger;
 var logger_error    = require('../common/logger.js').logger_error;
 
-function DB_Shop_Process () 
+function DB_Src_Process () 
 {
     var m_pool = db_pool.m_pool;
 
@@ -24,39 +26,35 @@ function DB_Shop_Process ()
         });
     }
 
-     // add shop
-    this.m_AddShop = function(shop, callback) {
-        var sql = 'INSERT INTO shop(uid, name, locate, brief, site, cost, phone, pic_main, pic_num, classify) \
-             VALUES(?,?,?,?,?,?,?,?,?,?)';
-        var sql_params = [shop.uid, shop.name, shop.locate, shop.brief, 
-                shop.site, shop.cost, shop.phone, shop.pic_main, shop.pic_num, shop.classify];
+     // add src
+    this.m_AddSrc = function(shop_id, classify, callback) {
+        var sql = 'INSERT INTO src(shop_id,classify) VALUES(?,?)';
+        var sql_params = [shop_id, classify]
 
         PoolExecute(sql, sql_params, callback);
     }
 
-     // find one food by food.id and passwd
-    this.m_FindOneById = function(id, callback) {
-        var sql = 'SELECT * FROM shop where id= ?';
-        var sql_params = [id];
-         
+    // find set by classify
+    this.m_FindByClassify = function(classify, callback) {
+        var sql =  'SELECT shop_id,classify FROM src where classify= ?';
+        var sql_params = [classify]
+
+        PoolExecute(sql, sql_params, callback);
+    } 
+
+    // 获取classify的数目
+    this.m_GetClyNum = function(callback) {
+        var sql = '  select count(*) as num from ( \
+	                select classify , count(*) as cnt from src group by 1 ) as total;';
+        var sql_params = ['']
         PoolExecute(sql, sql_params, callback);
     }
 
-    // get id by uid
-    this.m_GetIdByUid = function(uid, callback) {
-        var sql = 'SELECT id FROM shop where uid= ?';
-        var sql_params = [uid];
-
-        PoolExecute(sql, sql_params, callback);
-    }
-
-    // get by str
-    this.m_GetByStr = function(str, callback) {
-        var sql = 'SELECT * FROM shop where ' + str;
-        var sql_params = [];
-
+    this.m_GetAllCly = function(callback) {
+        var sql = ' select classify , count(*) as cnt from src group by 1 ';
+        var sql_params = ['']
         PoolExecute(sql, sql_params, callback);
     }
 };
 
-module.exports = new DB_Shop_Process;
+module.exports = new DB_Src_Process;

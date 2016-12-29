@@ -181,6 +181,12 @@ function HTTP_Food()
         var site = req.params.site;
 
         db_food_process.m_GetIntroBySite(site, function(err, result){
+
+             if (err) {
+                logger_error.error(err.message);
+                return;
+            }
+
             logger.debug(result);
 
             var num = result.length;
@@ -206,7 +212,6 @@ function HTTP_Food()
             
             res.render('food-intro', mejs);
 
-
         });
     }
 
@@ -215,6 +220,11 @@ function HTTP_Food()
         var id = Number( req.params.id );
 
         db_food_process.m_FindOneById(id, function(err, result){
+             if (err) {
+                logger_error.error(err.message);
+                return;
+            }
+
             var ret = Tools.Json2Str(result[0]);
             var proxyRoute = req.header("x-proxy-route") ? req.header("x-proxy-route") : CONFIG.PROXY_ROUTE;
             var mejs = { 

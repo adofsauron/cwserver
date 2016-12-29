@@ -100,3 +100,25 @@ exports.GetSuffix = function(filename) {
 	var postf=filename.substring(index1+1,index2);
 	return postf
 }
+
+
+exports.GetSelectColNum = function(sift, tb) {
+	var num = 0;
+	for (var i in sift) {
+		for (var s in tb) {
+			if (sift[i] == tb[s]) {
+				num += 1;
+			}
+		}
+	}
+	return num;
+}
+
+exports.GetJsonLength = function (Json) {
+	var len = 0
+	for (var i in Json) {
+		len += 1;
+	}
+	
+	return len;
+}

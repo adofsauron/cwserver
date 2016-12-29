@@ -5,7 +5,7 @@ var CONFIG          = require('../base/config.js');
 var logger          = require('../common/logger.js').logger;
 var logger_error    = require('../common/logger.js').logger_error;
 
-function DB_Process () 
+function DB_Food_Process () 
 {
     var m_pool = db_pool.m_pool;
 
@@ -74,4 +74,4 @@ function DB_Process ()
     }
 };
 
-module.exports = new DB_Process;
+module.exports = new DB_Food_Process;

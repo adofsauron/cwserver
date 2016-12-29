@@ -13,7 +13,8 @@ exports.VIEWS_PATH              = '/../views';                                  
 exports.DEFAULT_PAGE            = 'index.html';                                         // 访问/目录时，默认访问的文件
 exports.ACTION_FILE_UPLOAD      = '/file-upload';                                       // 上传文件时，与前端的接口actio
 exports.MaxFilesSize            = 200 * 1024 * 1024 * 1024;                             // 上传单个文件的大小限制 2G
-exports.XLSX_FILE               = WEB_SERVER_PATH + '/data/' + 'classify.xlsx';
+exports.CLASSIFY_FILE           = WEB_SERVER_PATH + '/data/' + 'classify.xlsx';
+exports.classify_SIFT_FILE      = WEB_SERVER_PATH + '/data/' + 'classify_sift.xlsx';
 
 exports.FS_BUFFER_SIZE          = 256;                                                  // fs_sync模块中开辟的buffer的长度，1024字节, 目前并不需要太大的存储空间
 

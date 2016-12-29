@@ -10,7 +10,7 @@ function HTTP_Model()
         var proxyRoute = req.header("x-proxy-route") ? req.header("x-proxy-route") : CONFIG.PROXY_ROUTE;
             
         var mejs = { 
-            csrfToken  : req.csrfToken(),
+            //csrfToken  : req.csrfToken(),
             WrapRoute  : function(x) { 
                 return function(y) { 
                     return Tools.WrapRoute(x, y);
@@ -26,7 +26,7 @@ function HTTP_Model()
         var proxyRoute = req.header("x-proxy-route") ? req.header("x-proxy-route") : CONFIG.PROXY_ROUTE;
               
         var mejs = { 
-            csrfToken  : req.csrfToken(),
+           // csrfToken  : req.csrfToken(),
             WrapRoute  : function(x) { 
                 return function(y) { 
                     return Tools.WrapRoute(x, y);
