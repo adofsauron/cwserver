@@ -7,18 +7,21 @@
         
     <hr/>
 
-    <p>register</p>
-    <form action=<%= WrapRoute('/register.action') %> method="post">
+    <form action=<%= WrapRoute('/register.action') %> enctype="multipart/form-data" method="post">
+        <p>登录邮箱: <input type="text" name="name" /></p>
+        <p>密码: <input type="password" name="passwd" /></p>
+        <p>密码确认: <input type="password" name="repasswd" /></p><hr/>
 
-        <p>name: <input type="text" name="name" /></p>
-        <p>passwd: <input type="password" name="passwd" /></p>
-        <p>reasswd: <input type="password" name="repasswd" /></p>
-        <input type="submit" value="Submit" />
+        <p>昵称: <input type="text" name="nick" /></p>
+        <p>头像: <input type="file" name="pic" multiple="multiple"/></p>
+        <p>手机: <input type="text" name="phone" /></p>
+        
+        <input type="submit" value="提交" />
     </form>
 
     <hr/>
 
-    <p><a href="<%= WrapRoute('/login.action') %>">login</a></p>
+    <p><a href="<%= WrapRoute('/login.action') %>">登录</a></p>
 
   </body>
 </html>

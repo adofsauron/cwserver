@@ -26,8 +26,8 @@ function DB_Process ()
 
     // add user
     this.m_AddUser = function(user, callback) {
-        var sql = 'INSERT INTO user(uid, name, passwd) VALUES(?, ?, ?)';
-        var sql_params = [user.uid, user.name, user.passwd];
+        var sql = 'INSERT INTO user(uid, name, nick, pic, passwd, phone) VALUES(?, ?, ?, ?, ?,?)';
+        var sql_params = [user.uid, user.name, user.nick, user.pic, user.passwd, user.phone];
 
         PoolExecute(sql, sql_params, callback);
     }
@@ -44,6 +44,38 @@ function DB_Process ()
     this.m_UpdateUser = function(oldUser , newUser, callback) {
         var sql = 'UPDATE user SET name = ?, passwd = ? WHERE name = ? AND passwd = ?';
         var sql_params = [newUser.name, newUser.passwd, oldUser.name, oldUser.passwd];
+         
+        PoolExecute(sql, sql_params, callback);
+    }
+
+    // update pwd by id
+    this.m_UpdatePwdById = function(newPwd, id, callback) {
+        var sql = 'UPDATE user SET passwd = ? WHERE id = ?';
+        var sql_params = [newPwd, id];
+         
+        PoolExecute(sql, sql_params, callback);
+    }
+
+     // update nick by id
+    this.m_UpdatePwdById = function(newNick, id, callback) {
+        var sql = 'UPDATE user SET nick = ? WHERE id = ?';
+        var sql_params = [newNick, id];
+         
+        PoolExecute(sql, sql_params, callback);
+    }
+
+     // find by id
+    this.m_FindOneById = function(uid, callback) {
+        var sql = 'SELECT * from user where id = ?';
+        var sql_params = [uid];
+         
+        PoolExecute(sql, sql_params, callback);
+    }
+
+    // find by uid
+    this.m_FindOneByUid = function(uid, callback) {
+        var sql = 'SELECT * from user where uid = ?';
+        var sql_params = [uid];
          
         PoolExecute(sql, sql_params, callback);
     }

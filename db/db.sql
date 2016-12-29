@@ -6,9 +6,12 @@
 CREATE TABLE IF NOT EXISTS `user`
 (
     id            INT(20)    NOT NULL   AUTO_INCREMENT,
-    uid          CHAR(128)  NOT NULL,    -- uuid,作为对应文件夹的名字
-    name          CHAR(20)   NOT NULL,   -- 用户名, 邮箱
-    passwd        CHAR(20)   NOT NULL,   -- 密码
+    uid           CHAR(128)  NOT NULL,   -- uuid,作为对应文件夹的名字
+    name          CHAR(40)   NOT NULL,   -- 用户名, 邮箱
+    nick          CHAR(40)   NOT null,   -- 昵称
+    pic           CHAR(40)   NOT NULL,   -- 头像
+    phone         char(20)   NOT NULL,   -- 手机号
+    passwd        CHAR(40)   NOT NULL,   -- 密码
 
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;

@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "www.mobiletrain.org /TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="www.mobiletrain.org ">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<meta name="format-detection" content="telephone=no,email=no"/>
+	<title>食客</title>
+	<link rel="stylesheet" href="/css/swiper.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/common.css">
+	<link rel="stylesheet" type="text/css" href="/css/user.css">
+	<script src="/js/jquery-1.9.1.min.js"></script>
+	<script src="/js/common.js"></script>
+	<script>
+	//适配
+		$(window).on('resize', function () {
+			var w = $(window).width();
+	    	$('html').css('font-size',(w/375*100) + 'px') ;
+	 	}).triggerHandler('resize') ;
+	</script>
+</head>
+
+  <body>
+
+    
+
+    <%
+        var info = JSON.parse(ret);
+    %>
+
+    <div class="user_top">
+		<img src="/upload/<%=info.uid%>/<%=info.pic%>">
+		<p><%=info.nick%></p>
+	</div>
+
+    <div class="section user_section">
+		<li>
+			<a class="user_middle" href="/user-detail/<%=info.id%>.action">
+				<img src="/image/icon/info.png">
+				<p>个人资料</p>
+			</a>
+		</li>
+		<li>
+			<a class="user_middle" href="/my_comment.html">
+				<img src="/image/icon/comment.png">
+				<p>我的评论</p>
+			</a>
+		</li>
+		<li>
+			<a class="user_middle" href="/setting.html">
+				<img src="/image/icon/setting.png">
+				<p>系统设置</p>
+			</a>
+		</li>
+	</div>
+     
+
+    <footer>
+		<li>
+			<a href="/food-intro/BJ.action">
+				<img src="/image/icon/find_active.png">
+				<p class="active">发现</p>
+			</a>
+		</li>
+		<li>
+			<a href="/select-shop.action">
+				<img src="/image/icon/select.png">
+				<p>精选</p>
+			</a>
+		</li>
+		<li>
+			<a href="/login.action">
+				<img src="/image/icon/user.png">
+				<p>我的</p>
+			</a>
+		</li>
+	</footer>
+
+    	<!-- Swiper JS -->
+	<script src="/js/swiper.min.js"></script>
+
+	<!-- Initialize Swiper -->
+	<script>
+		var swiper = new Swiper('.swiper-container', {
+			pagination: '.swiper-pagination',
+			slidesPerView: 'auto',
+			paginationClickable: true,
+//        grabCursor : true,
+//        setWrapperSize :true,
+			spaceBetween: 30
+		});
+	</script>
+
+  </body>
+</html>

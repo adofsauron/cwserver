@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<meta name="format-detection" content="telephone=no,email=no"/>
+	<title>食客</title>
+	<link rel="stylesheet" href="/css/swiper.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/common.css">
+	<link rel="stylesheet" type="text/css" href="/css/setting.css">
+	<script src="/js/jquery-1.9.1.min.js"></script>
+	<script src="/js/swipe.js"></script>
+	<script>
+	//适配		
+		$(window).on('resize', function () {
+			var w = $(window).width();
+	    	$('html').css('font-size',(w/375*100) + 'px') ;
+	 	}).triggerHandler('resize') ;
+	</script>
+</head>
+<body>
+    <%
+        var info = JSON.parse(ret);
+    %>
+	<header>
+		<a class="back" href="javascript:history.back(-1)">
+			<img src="/image/icon/back.png">
+		</a>
+		<p>昵称</p>
+	</header>
+
+    <%
+      url = WrapRoute('/nick-change') + '/' + info.id + '.action';
+    %>
+
+    <form action="<%= url %>" method="post">
+        <input class="change" type="text" name="newNick" placeholder="输入新昵称"></input>
+        <input class="submit_btn" type="submit" name="pwd_submit" value="保存"></input>
+    </form>
+
+</body>
+</html>
