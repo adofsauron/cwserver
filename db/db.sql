@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `shop`
     id            INT(20)       NOT NULL   AUTO_INCREMENT,
     uid           CHAR(128)     NOT NULL,
     name          CHAR(20)      NOT NULL,   -- 店铺名字
-    pic_main      CHAR(250)      NOT NULL,   -- 店铺图片
+    pic_main      CHAR(250)     NOT NULL,   -- 店铺图片
     pic_num       INT(4)        NOT NULL,   -- 店铺图片个数
     brief         CHAR(250)     NOT NULL,   -- 简介
     site          CHAR(20)      NOT NULL,   -- 地域
