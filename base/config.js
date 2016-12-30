@@ -25,7 +25,6 @@ exports.DB_PORT                 = process.env.DB_PORT       || 3306;            
 exports.DB_USER                 = process.env.DB_USER       || 'root';                  // 数据库的用户名
 exports.DB_PASSWD               = process.env.DB_PASSWD     || '';                      // 数据库的口令
 exports.DB_DBNAME               = process.env.DB_DBNAME     || 'cate';                  // 数据库的数据库名字
-exports.DB_TABLE_USER           = process.env.DB_TABLE      || 'user';                  // 用户表
 
 exports.DB_POOL_MAX             = 10;                                                    // 数据库连接池最大数目
 exports.DB_POOL_MIN             = 3;                                                     // 数据库连接池最小数目 
